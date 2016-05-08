@@ -74,6 +74,14 @@ const config = {
         },
       },
       {
+        test: /\.css$/,
+        loaders: [
+          'isomorphic-style-loader',
+          `css-loader?sourceMap&modules&localIdentName=[local]`,
+          'postcss-loader?parser=postcss-scss',
+        ],
+      },
+      {
         test: /\.scss$/,
         loaders: [
           'isomorphic-style-loader',
@@ -143,9 +151,13 @@ const config = {
 
   postcss(bundler) {
     return [
-      require('postcss-import')({ addDependencyTo: bundler }),
+      require('postcss-import')({
+        addDependencyTo: bundler
+      }),
       require('precss')(),
-      require('autoprefixer')({ browsers: AUTOPREFIXER_BROWSERS }),
+      require('autoprefixer')({
+        browsers: AUTOPREFIXER_BROWSERS
+      }),
     ];
   },
 };
@@ -168,7 +180,10 @@ const clientConfig = extend(true, {}, config, {
 
     // Define free variables
     // https://webpack.github.io/docs/list-of-plugins.html#defineplugin
-    new webpack.DefinePlugin({ ...GLOBALS, 'process.env.BROWSER': true }),
+    new webpack.DefinePlugin({
+      ...GLOBALS,
+      'process.env.BROWSER': true
+    }),
 
     // Emit a file with assets paths
     // https://github.com/sporto/assets-webpack-plugin#options
@@ -226,8 +241,7 @@ const serverConfig = extend(true, {}, config, {
   externals: [
     /^\.\/assets$/,
     function filter(context, request, cb) {
-      const isExternal =
-        request.match(/^[@a-z][a-z\/\.\-0-9]*$/i) &&
+      const isExternal = request.match(/^[@a-z][a-z\/\.\-0-9]*$/i) &&
         !request.match(/^react-routing/) &&
         !context.match(/[\\/]react-routing/);
       cb(null, Boolean(isExternal));
@@ -238,12 +252,18 @@ const serverConfig = extend(true, {}, config, {
 
     // Define free variables
     // https://webpack.github.io/docs/list-of-plugins.html#defineplugin
-    new webpack.DefinePlugin({ ...GLOBALS, 'process.env.BROWSER': false }),
+    new webpack.DefinePlugin({
+      ...GLOBALS,
+      'process.env.BROWSER': false
+    }),
 
     // Adds a banner to the top of each generated chunk
     // https://webpack.github.io/docs/list-of-plugins.html#bannerplugin
     new webpack.BannerPlugin('require("source-map-support").install();',
-      { raw: true, entryOnly: false }),
+      {
+        raw: true,
+        entryOnly: false
+      }),
   ],
 
   node: {

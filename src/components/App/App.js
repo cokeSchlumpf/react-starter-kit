@@ -14,6 +14,8 @@ import Header from '../Header';
 import Feedback from '../Feedback';
 import Footer from '../Footer';
 
+import bs from '../../../node_modules/bootstrap/dist/css/bootstrap.css';
+
 class App extends Component {
 
   static propTypes = {
@@ -42,8 +44,10 @@ class App extends Component {
   }
 
   componentWillMount() {
-    const { insertCss } = this.props.context;
+    const {insertCss} = this.props.context;
+    insertCss(bs);
     this.removeCss = insertCss(s);
+    console.log(this.removeCss);
   }
 
   componentWillUnmount() {
@@ -53,12 +57,13 @@ class App extends Component {
   render() {
     return !this.props.error ? (
       <div>
+        <div><span className="glyphicon glyphicon-search" aria-hidden="true"></span> HAAALLOOO</div>
         <Header />
         {this.props.children}
         <Feedback />
         <Footer />
       </div>
-    ) : this.props.children;
+      ) : this.props.children;
   }
 
 }
