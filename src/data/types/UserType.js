@@ -7,18 +7,23 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import {
-  GraphQLObjectType as ObjectType,
-  GraphQLID as ID,
-  GraphQLString as StringType,
-  GraphQLNonNull as NonNull,
-} from 'graphql';
+import { GraphQLObjectType as ObjectType, GraphQLID as ID, GraphQLString as StringType, GraphQLNonNull as NonNull } from 'graphql';
 
 const UserType = new ObjectType({
   name: 'User',
   fields: {
-    id: { type: new NonNull(ID) },
-    email: { type: StringType },
+    id: {
+      type: new NonNull(ID)
+    },
+    email: {
+      type: new NonNull(StringType)
+    },
+    name: {
+      type: new NonNull(StringType)
+    },
+    location: {
+      type: StringType
+    }
   },
 });
 
